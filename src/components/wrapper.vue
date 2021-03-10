@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import CanvasDraw from './CanvasDraw'
+
 export default {
   name: 'Wrapper',
   data () {
@@ -13,16 +15,7 @@ export default {
     }
   },
   mounted () {
-    const canvasContainer = document.getElementById('canvasContainer')
-    const ctx = canvasContainer.getContext("2d")
-
-    ctx.fillStyle = "#1a0701";
-    ctx.fillRect (10, 10, 10, 200);
-
-    ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-    ctx.fillRect (30, 30, 55, 50);
-
-    console.log('=xu=', ctx)
+    new CanvasDraw('canvasContainer')
   },
 }
 </script>
