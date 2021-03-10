@@ -1,10 +1,8 @@
+import CanvasCore from './CanvasCore'
 
-class CanvasDraw {
+class PaintSorting extends CanvasCore {
   constructor (canvasElementId) {
-    this.canvasContainer = document.getElementById(canvasElementId)
-    this.ctx = canvasContainer.getContext("2d")
-
-    this.draw()
+    super(canvasElementId)
   }
 
   draw () {
@@ -16,4 +14,4 @@ class CanvasDraw {
   }
 }
 
-export default CanvasDraw
+export default PaintSorting

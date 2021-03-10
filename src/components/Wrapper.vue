@@ -5,17 +5,17 @@
 </template>
 
 <script>
-import CanvasDraw from './CanvasDraw'
+import PaintSorting from './canvas/PaintSorting'
 
 export default {
-  name: 'Crapper',
+  name: 'Wrapper',
   data () {
     return {
 
     }
   },
   mounted () {
-    new CanvasDraw('canvasContainer')
+    new PaintSorting('canvasContainer')
   },
 }
 </script>

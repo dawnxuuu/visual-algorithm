@@ -1,14 +1,14 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <crapper></crapper>
+  <wrapper></wrapper>
 </template>
 
 <script>
-import Crapper from './components/Crapper.vue'
+import Wrapper from './components/Wrapper.vue'
 
 export default {
   components: {
-    Crapper
+    Wrapper
   }
 }
 </script>
