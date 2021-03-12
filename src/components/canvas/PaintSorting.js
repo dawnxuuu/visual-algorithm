@@ -40,6 +40,12 @@ class PaintSorting extends CanvasCore {
     this.ctx.lineWidth = 4
     this.ctx.strokeRect(x, y, width, height)
   }
+
+  redefineArrayToSort () {
+    this.arrayToSort.forEach(() => {
+
+    })
+  }
 }
 
 export default PaintSorting

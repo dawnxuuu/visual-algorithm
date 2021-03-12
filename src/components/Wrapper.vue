@@ -1,5 +1,8 @@
 <template>
   <div>
+    {{ JSON.stringify(arrayToSort) }}
+  </div>
+  <div>
     <canvas id="canvasContainer" width="500" height="500"></canvas>
   </div>
 </template>
@@ -11,11 +14,12 @@ export default {
   name: 'Wrapper',
   data () {
     return {
-
+      arrayToSort: []
     }
   },
   mounted () {
-    new PaintSorting('canvasContainer')
+    const res = new PaintSorting('canvasContainer')
+    this.arrayToSort = res.arrayToSort
   },
 }
 </script>
