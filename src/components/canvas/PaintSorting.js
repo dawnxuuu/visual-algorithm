@@ -9,19 +9,25 @@ import { getRandomArray } from '../../utils/array'
 class PaintSorting extends CanvasCore {
   constructor (canvasElementId) {
     super(canvasElementId)
-    // 待排序数组
-    this.arrayToSort = getRandomArray(10)
+    // 原始随机数组
+    this.rawRandomArr = getRandomArray(10)
+    // 经过响应式改造的随机数组，对它进行排序
+    this.reactiveArrTodoSort = []
+    // 记录一个算法步骤中应该如何画出所有元素矩形
+    this.oneStepRecord = []
+
     this.draw()
+    this.defineReactiveArr()
   }
 
   // 绘制全部矩形
   draw () {
     // 一个矩形的宽度
-    const oneRectWidth = this.canvasWidth / this.arrayToSort.length
+    const oneRectWidth = this.canvasWidth / this.rawRandomArr.length
     // 根据画布高度和数组个数，将矩形高度平分
-    const perRectHeight = this.canvasHeight / this.arrayToSort.length
+    const perRectHeight = this.canvasHeight / this.rawRandomArr.length
 
-    this.arrayToSort.forEach((item, index) => {
+    this.rawRandomArr.forEach((item, index) => {
       this.drawOneRect(
         oneRectWidth * index,
         this.canvasHeight - item * perRectHeight,
@@ -41,9 +47,31 @@ class PaintSorting extends CanvasCore {
     this.ctx.strokeRect(x, y, width, height)
   }
 
-  redefineArrayToSort () {
-    this.arrayToSort.forEach(() => {
+  defineReactiveArr () {
+    // 遍历原始随机数组
+    this.rawRandomArr.forEach((value, index) => {
+      const item = {
+        value,
+        index,
+        active: false
+      }
+      this.oneStepRecord.push(item)
 
+      // 定义一个新的响应式数组，将对此数据进行排序。
+      // 算法对此数组进行排序时，触发getter/setter，从而记录每一步算法步骤
+      Object.defineProperty(this.reactiveArrTodoSort, index, {
+        enumerable : true,
+        configurable : true,
+        get () {
+          // item.active = true
+          console.log('=xu=', item.value)
+          return item.value
+        },
+        set (newValue) {
+          item.value = newValue
+          return null
+        }
+      })
     })
   }
 }
