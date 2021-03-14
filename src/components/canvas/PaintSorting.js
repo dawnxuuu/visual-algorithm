@@ -18,7 +18,6 @@ class PaintSorting extends CanvasCore {
     // 记录一个算法步骤中应该如何画出所有元素矩形
     this.oneStepRecord = []
 
-    // this.draw()
     this.defineReactiveArr()
   }
 
