@@ -1,7 +1,7 @@
 <template>
-  <div>原始随机数组{{ JSON.stringify(rawRandomArr) }}</div>
-  <div>响应式随机数组{{ JSON.stringify(reactiveArrTodoSort) }}</div>
-  <div>步骤{{ JSON.stringify(oneStepRecord) }}</div>
+  <!-- <div>原始随机数组{{ JSON.stringify(rawRandomArr) }}</div> -->
+  <!-- <div>响应式随机数组{{ JSON.stringify(reactiveArrTodoSort) }}</div> -->
+  <!-- <div>步骤{{ JSON.stringify(oneStepRecord) }}</div> -->
   <div>
     <canvas id="canvasContainer" width="500" height="500"></canvas>
   </div>
@@ -17,14 +17,17 @@ export default {
     return {
       rawRandomArr: [],
       reactiveArrTodoSort: [],
-      oneStepRecord: []
+      oneStepRecord: [],
+      allArray: [],
+      res: {}
     }
   },
   mounted () {
-    const res = new PaintSorting('canvasContainer')
+    const res = new PaintSorting('canvasContainer', this.onChange)
     this.rawRandomArr = res.rawRandomArr
     this.reactiveArrTodoSort = res.reactiveArrTodoSort
     this.oneStepRecord = res.oneStepRecord
+    this.res = res
     this.execute()
   },
   methods: {
@@ -40,6 +43,19 @@ export default {
       `
 
       window.eval(evalCode)(this.reactiveArrTodoSort)()
+    },
+    onChange (a) {
+      this.allArray.push(a)
+      this.drawArray()
+    },
+    drawArray () {
+      setTimeout(() => {
+        console.log('=xu=')
+        this._drawArray()
+      }, 1000);
+    },
+    _drawArray () {
+      this.res.draw(this.allArray.shift())
     }
   },
 }

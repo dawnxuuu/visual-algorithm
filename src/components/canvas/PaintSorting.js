@@ -7,8 +7,10 @@ import { getRandomArray } from '../../utils/array'
  * @extends {CanvasCore}
  */
 class PaintSorting extends CanvasCore {
-  constructor (canvasElementId) {
+  constructor (canvasElementId, changeFun) {
     super(canvasElementId)
+    this.changeFun = changeFun
+
     // 原始随机数组
     this.rawRandomArr = getRandomArray(10)
     // 经过响应式改造的随机数组，对它进行排序
@@ -16,23 +18,23 @@ class PaintSorting extends CanvasCore {
     // 记录一个算法步骤中应该如何画出所有元素矩形
     this.oneStepRecord = []
 
-    this.draw()
+    // this.draw()
     this.defineReactiveArr()
   }
 
   // 绘制全部矩形
-  draw () {
+  draw (arr) {
+    this.clearCanvas()
     // 一个矩形的宽度
     const oneRectWidth = this.canvasWidth / this.rawRandomArr.length
     // 根据画布高度和数组个数，将矩形高度平分
     const perRectHeight = this.canvasHeight / this.rawRandomArr.length
-
-    this.rawRandomArr.forEach((item, index) => {
+    arr.forEach((item, index) => {
       this.drawOneRect(
         oneRectWidth * index,
-        this.canvasHeight - item * perRectHeight,
+        this.canvasHeight - item.value * perRectHeight,
         oneRectWidth,
-        item * perRectHeight
+        item.value * perRectHeight
       )
     })
   }
@@ -47,7 +49,18 @@ class PaintSorting extends CanvasCore {
     this.ctx.strokeRect(x, y, width, height)
   }
 
+  getArrToSort () {
+    return this.oneStepRecord.map((item, index) => {
+      return {
+        value: item.value,
+        index: item.index,
+        active: item.active
+      }
+    })
+  }
+
   defineReactiveArr () {
+    const self = this
     // 遍历原始随机数组
     this.rawRandomArr.forEach((value, index) => {
       const item = {
@@ -60,19 +73,22 @@ class PaintSorting extends CanvasCore {
       // 定义一个新的响应式数组，将对此数据进行排序。
       // 算法对此数组进行排序时，触发getter/setter，从而记录每一步算法步骤
       Object.defineProperty(this.reactiveArrTodoSort, index, {
-        enumerable : true,
-        configurable : true,
         get () {
-          // item.active = true
-          console.log('=xu=', item.value)
+          self.changeFun(self.getArrToSort())
           return item.value
         },
         set (newValue) {
           item.value = newValue
+          self.changeFun(self.getArrToSort())
           return null
         }
       })
     })
+  }
+
+  clearCanvas () {
+    this.ctx.fillStyle = '#707070'
+    this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight)
   }
 }
 
