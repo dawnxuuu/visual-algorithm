@@ -12,7 +12,7 @@ class PaintSorting extends CanvasCore {
     this.changeFun = changeFun
 
     // 原始随机数组
-    this.rawRandomArr = getRandomArray(10)
+    this.rawRandomArr = getRandomArray(50)
     // 经过响应式改造的随机数组，对它进行排序
     this.reactiveArrTodoSort = []
     // 记录一个算法步骤中应该如何画出所有元素矩形
@@ -44,7 +44,7 @@ class PaintSorting extends CanvasCore {
     this.ctx.fillRect(x, y, width, height)
 
     this.ctx.strokeStyle = 'blue'
-    this.ctx.lineWidth = 4
+    this.ctx.lineWidth = 2
     this.ctx.strokeRect(x, y, width, height)
   }
 
@@ -73,12 +73,16 @@ class PaintSorting extends CanvasCore {
       // 算法对此数组进行排序时，触发getter/setter，从而记录每一步算法步骤
       Object.defineProperty(this.reactiveArrTodoSort, index, {
         get () {
-          self.changeFun(self.getArrToSort())
+          const temp = self.getArrToSort()
+          // console.log('get', temp)
+          self.changeFun(temp)
           return item.value
         },
         set (newValue) {
           item.value = newValue
-          self.changeFun(self.getArrToSort())
+          const temp = self.getArrToSort()
+          // console.log('set', temp)
+          self.changeFun(temp)
           return null
         }
       })

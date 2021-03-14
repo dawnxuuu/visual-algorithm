@@ -34,20 +34,43 @@ export default {
           }
         })()
       `
+      console.time('算法执行时间')
       window.eval(evalCode)(this.reactiveArrTodoSort)()
+      console.timeEnd('算法执行时间')
+      this.__drawArray()
     },
     onChange (a) {
       this.allArray.push(a)
-      this.drawArray()
     },
-    drawArray () {
-      setTimeout(() => {
-        console.log('=xu=')
-        this._drawArray()
-      }, 1000);
-    },
-    _drawArray () {
-      this.res.draw(this.allArray.shift())
+    __drawArray () {
+      const genTimer = time => new Promise((resolve) => {
+        setTimeout(() => {
+          resolve()
+        }, time)
+      })
+
+      const promiseArr = this.allArray.map(item => () => genTimer(10).then(() => {
+        this.res.draw(item)
+        return null
+      }))
+
+      const mergeExecute = (asyncArr) => {
+        async function helper (fnArr) {
+          const promises = []
+          for (const fn of fnArr) {
+            promises.push(await fn())
+          }
+          return Promise.all(promises)
+        }
+
+        return helper(asyncArr)
+      }
+
+      console.time('可视化步骤执行时间')
+      mergeExecute(promiseArr).then((data)=> {
+        console.log('done')
+        console.timeEnd('可视化步骤执行时间')
+      })
     }
   },
 }
