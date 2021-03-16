@@ -5,22 +5,21 @@
 </template>
 
 <script>
-import PaintSorting from './canvas/PaintSorting'
+import SortingCore from './sorting/SortingCore'
+import CanvasSorting from './canvas/CanvasSorting'
 import { quickSort } from './raw-function-code/sorting'
+import executeByStep from './sorting/execute-by-step'
 
 export default {
   name: 'Wrapper',
   data () {
     return {
       reactiveArrTodoSort: [],
-      allArray: [],
-      res: {}
+      sortingCore: {}
     }
   },
   mounted () {
-    const res = new PaintSorting('canvasContainer', this.onChange)
-    this.reactiveArrTodoSort = res.reactiveArrTodoSort
-    this.res = res
+    this.sortingCore = new SortingCore('canvasContainer')
     this.execute()
   },
   methods: {
@@ -35,42 +34,13 @@ export default {
         })()
       `
       console.time('算法执行时间')
-      window.eval(evalCode)(this.reactiveArrTodoSort)()
+      window.eval(evalCode)(this.sortingCore.reactiveArrTodoSort)()
       console.timeEnd('算法执行时间')
-      this.__drawArray()
+      this.drawAllSteps()
     },
-    onChange (a) {
-      this.allArray.push(a)
-    },
-    __drawArray () {
-      const genTimer = time => new Promise((resolve) => {
-        setTimeout(() => {
-          resolve()
-        }, time)
-      })
-
-      const promiseArr = this.allArray.map(item => () => genTimer(10).then(() => {
-        this.res.draw(item)
-        return null
-      }))
-
-      const mergeExecute = (asyncArr) => {
-        async function helper (fnArr) {
-          const promises = []
-          for (const fn of fnArr) {
-            promises.push(await fn())
-          }
-          return Promise.all(promises)
-        }
-
-        return helper(asyncArr)
-      }
-
-      console.time('可视化步骤执行时间')
-      mergeExecute(promiseArr).then((data)=> {
-        console.log('done')
-        console.timeEnd('可视化步骤执行时间')
-      })
+    drawAllSteps () {
+      const canvasSorting = new CanvasSorting('canvasContainer', 50)
+      executeByStep(this.sortingCore.allStepsRecordFinallyShow, canvasSorting.draw)
     }
   },
 }
