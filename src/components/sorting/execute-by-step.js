@@ -1,12 +1,12 @@
-function executeByStep (allStepsRecord, drawFn) {
+function executeByStep (allStepsRecord, canvasSorting, gapTime) {
   const genTimer = time => new Promise((resolve) => {
     setTimeout(() => {
       resolve()
     }, time)
   })
 
-  const promiseArr = allStepsRecord.map(item => () => genTimer(10).then(() => {
-    drawFn(item)
+  const promiseArr = allStepsRecord.map(item => () => genTimer(gapTime).then(() => {
+    canvasSorting.draw(item)
     return null
   }))
 

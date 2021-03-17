@@ -9,8 +9,6 @@ class CanvasSorting extends CanvasCore {
     this.oneRectWidth = this.canvasWidth / this.sortLength
     // 根据画布高度和数组个数，将矩形高度平分
     this.perRectHeight = this.canvasHeight / this.sortLength
-
-    this.draw = this.draw.bind(this)
   }
 
   // 绘制全部矩形
