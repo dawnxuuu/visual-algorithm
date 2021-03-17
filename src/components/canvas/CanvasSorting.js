@@ -11,8 +11,6 @@ class CanvasSorting extends CanvasCore {
     this.perRectHeight = this.canvasHeight / this.sortLength
 
     this.draw = this.draw.bind(this)
-    this.clearCanvas = this.clearCanvas.bind(this)
-    this.drawOneRect = this.drawOneRect.bind(this)
   }
 
   // 绘制全部矩形

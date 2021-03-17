@@ -14,12 +14,13 @@ export default {
   name: 'Wrapper',
   data () {
     return {
-      reactiveArrTodoSort: [],
-      sortingCore: {}
+      sortLength: 50, // 待排序数组长度
+      sortingCore: {},
+      canvasSorting: {}
     }
   },
   mounted () {
-    this.sortingCore = new SortingCore('canvasContainer')
+    this.sortingCore = new SortingCore(this.sortLength)
     this.execute()
   },
   methods: {
@@ -33,13 +34,14 @@ export default {
           }
         })()
       `
+
       console.time('算法执行时间')
       window.eval(evalCode)(this.sortingCore.reactiveArrTodoSort)()
       console.timeEnd('算法执行时间')
       this.drawAllSteps()
     },
     drawAllSteps () {
-      const canvasSorting = new CanvasSorting('canvasContainer', 50)
+      const canvasSorting = new CanvasSorting('canvasContainer', this.sortLength)
       executeByStep(this.sortingCore.allStepsRecordFinallyShow, canvasSorting.draw)
     }
   },

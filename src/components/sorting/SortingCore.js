@@ -6,9 +6,9 @@ import { getRandomArray } from '../../utils/array'
  * @extends {CanvasCore}
  */
 class SortingCore {
-  constructor () {
+  constructor (sortLength) {
     // 原始随机数组
-    this.rawRandomArr = getRandomArray(50)
+    this.rawRandomArr = getRandomArray(sortLength)
     // 经过响应式改造的随机数组，对它进行排序
     this.reactiveArrTodoSort = []
     // 记录一个算法步骤中应该如何画出所有元素矩形
