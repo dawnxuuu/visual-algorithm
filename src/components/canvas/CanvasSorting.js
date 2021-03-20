@@ -21,14 +21,15 @@ class CanvasSorting extends CanvasCore {
         this.oneRectWidth * index,
         this.canvasHeight - item.value * this.perRectHeight,
         this.oneRectWidth,
-        item.value * this.perRectHeight
+        item.value * this.perRectHeight,
+        item.active ? '#ff0000' : '#42b983'
       )
     })
   }
 
   // 绘制一个描边填充矩形
-  drawOneRect (x, y, width, height) {
-    this.ctx.fillStyle = "#4fd"
+  drawOneRect (x, y, width, height, fillColor) {
+    this.ctx.fillStyle = fillColor
     this.ctx.fillRect(x, y, width, height)
 
     this.ctx.strokeStyle = 'blue'

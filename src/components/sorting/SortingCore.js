@@ -34,12 +34,12 @@ class SortingCore {
       // 算法对此数组进行排序时，触发getter/setter，从而记录每一步算法步骤
       Object.defineProperty(this.reactiveArrTodoSort, index, {
         get () {
-          self.collectGetterSetter()
+          self.collectGetterSetter(item.value)
           return item.value
         },
         set (newValue) {
           item.value = newValue
-          self.collectGetterSetter()
+          self.collectGetterSetter(item.value)
           return null
         }
       })
@@ -48,12 +48,12 @@ class SortingCore {
 
   // 累积收集所有步骤，每个步骤中都包含N(N为待排序数组长度)个要展示的矩形元素，
   // 每个步骤中选中的元素要被标记为active:true
-  collectGetterSetter () {
+  collectGetterSetter (selectedItemValue) {
     const oneStep = this.oneStepRecord.map((item, index) => {
       return {
         value: item.value,
         index: item.index,
-        active: item.active
+        active: selectedItemValue === item.value
       }
     })
 

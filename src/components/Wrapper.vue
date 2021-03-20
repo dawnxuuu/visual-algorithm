@@ -14,7 +14,8 @@ export default {
   name: 'Wrapper',
   data () {
     return {
-      sortLength: 50, // 待排序数组长度
+      sortLength: 10, // 待排序数组长度
+      gapTime: 100, // 间隔时间
       sortingCore: {},
       canvasSorting: {}
     }
@@ -42,7 +43,7 @@ export default {
     },
     drawAllSteps () {
       const canvasSorting = new CanvasSorting('canvasContainer', this.sortLength)
-      executeByStep(this.sortingCore.allStepsRecordFinallyShow, canvasSorting.draw, 10)
+      executeByStep(this.sortingCore.allStepsRecordFinallyShow, canvasSorting.draw, this.gapTime)
     }
   },
 }
