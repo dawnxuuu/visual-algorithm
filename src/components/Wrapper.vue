@@ -42,7 +42,7 @@ export default {
     },
     drawAllSteps () {
       const canvasSorting = new CanvasSorting('canvasContainer', this.sortLength)
-      executeByStep(this.sortingCore.allStepsRecordFinallyShow, canvasSorting, 10)
+      executeByStep(this.sortingCore.allStepsRecordFinallyShow, canvasSorting.draw, 10)
     }
   },
 }
