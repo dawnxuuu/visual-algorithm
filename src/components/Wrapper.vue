@@ -50,5 +50,7 @@ export default {
 </script>
 
 <style scoped>
-  canvas { border: 1px solid black; }
+  canvas { 
+    border: 1px solid black;
+  }
 </style>

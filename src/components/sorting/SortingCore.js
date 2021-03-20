@@ -1,4 +1,4 @@
-import { getRandomArray } from '../../utils/array'
+import { getRandomArray } from '../../utils/tool'
 
 /**
  * 排序算法绘制

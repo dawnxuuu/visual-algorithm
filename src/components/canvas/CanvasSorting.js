@@ -1,4 +1,9 @@
 import CanvasCore from './CanvasCore'
+import { getRandomColor } from '../../utils/tool'
+
+const UNREACTIVE_COLOR = '#135f4c' // 非活动矩形颜色
+const CANVAS_BG_COLOR = '#707070' // 画布背景色
+const STROKE_COLOR = '#fff' // 描边色
 
 class CanvasSorting extends CanvasCore {
   constructor (canvasElementId, sortLength) {
@@ -22,7 +27,7 @@ class CanvasSorting extends CanvasCore {
         this.canvasHeight - item.value * this.perRectHeight,
         this.oneRectWidth,
         item.value * this.perRectHeight,
-        item.active ? '#ff0000' : '#42b983'
+        item.active ? getRandomColor() : UNREACTIVE_COLOR
       )
     })
   }
@@ -32,14 +37,14 @@ class CanvasSorting extends CanvasCore {
     this.ctx.fillStyle = fillColor
     this.ctx.fillRect(x, y, width, height)
 
-    this.ctx.strokeStyle = 'blue'
-    this.ctx.lineWidth = 2
+    this.ctx.strokeStyle = STROKE_COLOR
+    this.ctx.lineWidth = 1
     this.ctx.strokeRect(x, y, width, height)
   }
 
   // 清除画布
   clearCanvas () {
-    this.ctx.fillStyle = '#707070'
+    this.ctx.fillStyle = CANVAS_BG_COLOR
     this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight)
   }
 }
