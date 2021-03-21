@@ -7,7 +7,7 @@
 <script>
 import SortingCore from './sorting/SortingCore'
 import CanvasSorting from './canvas/CanvasSorting'
-import { quickSort } from './raw-function-code/sorting'
+import { quickSort, heapSort, mergeSort } from './raw-function-code/sorting'
 import executeByStep from './sorting/execute-by-step'
 
 export default {
